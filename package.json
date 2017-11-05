@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-     "devstart": "nodemon ./bin/www"
+    "devstart": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -12,10 +12,23 @@
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "morgan": "~1.9.0",
+    "passport": "^0.4.0",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anoopms1988/bodybuilding.git"
+  },
+  "author": "anoopms",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anoopms1988/bodybuilding/issues"
+  },
+  "homepage": "https://github.com/anoopms1988/bodybuilding#readme",
+  "description": "bodybuilding"
 }
