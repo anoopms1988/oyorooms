@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport')
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var passport= require('./config/passport');
 
 var app = express();
 
@@ -31,7 +32,50 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());  
+app.post('/auth', passport.authenticate(  
+  'local', {
+    session: false
+  }), serialize, generateToken, respond);
+  
+  const dbc = {  
+    updateOrCreate: function(user, cb){
+      // db dummy, we just cb the user
+      cb(null, user);
+    }
+  };
 
+  function serialize(req, res, next) {  
+    dbc.updateOrCreate(req.user, function(err, user){
+      if(err) {return next(err);}
+      // we store the updated information in req.user again
+      req.user = {
+        id: user.id
+      };
+      next();
+    });
+  }
+  
+ 
+
+  const jwt = require('jsonwebtoken');
+  
+  function generateToken(req, res, next) {  
+    req.token = jwt.sign({
+      id: req.user.id,
+    }, 'server secret', {
+ 
+    });
+    next();
+  }
+
+  function respond(req, res) {  
+    res.status(200).json({
+      user: req.user,
+      token: req.token
+    });
+  }
+ 
 app.use('/', index);
 app.use('/users', users);
 
