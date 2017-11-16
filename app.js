@@ -4,22 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
 
-
+//ROUTES
 var index = require('./routes/index');
 var users = require('./routes/users');
 var passport= require('./config/passport');
 
 var app = express();
-
-//Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb://127.0.0.1/bodybuilding';
-mongoose.connect(mongoDB, {
-  useMongoClient: true
-});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,15 +48,11 @@ app.post('/auth', passport.authenticate(
     });
   }
   
- 
-
-  const jwt = require('jsonwebtoken');
-  
-  function generateToken(req, res, next) {  
+ function generateToken(req, res, next) {  
     req.token = jwt.sign({
       id: req.user.id,
     }, 'server secret', {
- 
+      expiresIn: 72000
     });
     next();
   }
