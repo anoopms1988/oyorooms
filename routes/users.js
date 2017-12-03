@@ -11,7 +11,7 @@ router.get('/',authenticate, function(req, res, next) {
 });
 
 //signup 
-router.post('/create_user',authenticate,user_controller.create_user);
+router.post('/signup',authenticate,user_controller.create_user);
 
 module.exports = router;
 
