@@ -1,11 +1,7 @@
 var User = require('../../models/user');
-
+var encrypt=require('../../services/encryption')
 var async = require('async');
-//var bcrypt = require('bcrypt');
 
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 
 
@@ -29,7 +25,7 @@ exports.create_user = function (req, res, next) {
         lastname: req.body.lastname,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password,
+        password: encrypt.hashPassword(req.body.password),
         active: true,
     });
     var errors = req.validationErrors();
