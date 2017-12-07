@@ -22,9 +22,12 @@ exports.create_user = function(req, res, next) {
 
     user.save(function (err) {
         if (err) {
-             return next(err);
+            res.send(err);
+             }else{
+                res.send(user);
              }
         console.log(user);
     });
+    //console.log(user)
     
 };
