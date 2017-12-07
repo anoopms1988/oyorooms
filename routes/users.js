@@ -3,7 +3,7 @@ var router = express.Router();
 const expressJwt = require('express-jwt');  
 const authenticate = expressJwt({secret : 'server secret'});
 
-var user_controller =require('../controllers/userController')
+var user_controller =require('../controllers/user/userController')
 
 /* GET users listing. */
 router.get('/',authenticate, function(req, res, next) {
