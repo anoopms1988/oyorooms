@@ -1,6 +1,19 @@
 var User = require('../../models/user');
 
 var async = require('async');
+//var bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
+
+
+
+// function encrypt(password) {
+//     bcrypt.hash(password, saltRounds, function(err, hash) {
+//          return hash
+//       });
+// }
 
 exports.create_user = function (req, res, next) {
     req.checkBody('firstname', 'Firstname must not be empty.').notEmpty();
