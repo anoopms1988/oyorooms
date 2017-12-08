@@ -1,6 +1,7 @@
 var User = require('../../models/user');
-
+var encrypt=require('../../services/encryption')
 var async = require('async');
+
 
 
 exports.create_user = function (req, res, next) {
@@ -11,19 +12,12 @@ exports.create_user = function (req, res, next) {
     req.checkBody('password', 'Password must not be empty.').notEmpty();
 
 
-    var password=req.body.password;
-    var encrypt_password=bcrypt.hash(password, saltRounds, function(err, hash) {
-        if(err){
-            console.log(err)
-        }
-        return hash
-     });
     var new_user = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         username: req.body.username,
-        password: encrypt_password,
+        password: encrypt.hashPassword(req.body.password),
         active: true,
     });
     var errors = req.validationErrors();
