@@ -1,14 +1,14 @@
 'use strict';
 const passport = require('passport');
 const Strategy = require('passport-local');
-var User = require('../models/user');
+var User = require('../models/user/user');
 var encrypt = require('../services/encryption')
 
 passport.use(new Strategy(
   function (username, password, done) {
     User.findOne({ 'username': username }).exec(function (error, user) {
       if(error){
-        console.log(error);
+        done(null, false);
       }
       if (encrypt.comparePassword(password, user.password)) {
         done(null, user);
@@ -17,20 +17,10 @@ passport.use(new Strategy(
         done(null, false);
       }
     });
-    // database dummy - find user and verify password
-    // if (username === 'devils name' && password === '666') {
-    //   done(null, {
-    //     id: 666,
-    //     firstname: 'devils',
-    //     lastname: 'name',
-    //     email: 'devil@he.ll',
-    //     verified: true
-    //   });
-    // }
-    // else {
-    //   done(null, false);
-    // }
+    done(null, false);
+    
   }
+
 ));
 
 

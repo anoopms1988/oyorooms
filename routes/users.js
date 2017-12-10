@@ -10,8 +10,10 @@ router.get('/',authenticate, function(req, res, next) {
   res.send('respond with a resource');
 });
 
-//signup 
+//Authentication 
 router.post('/signup',authenticate,user_controller.create_user);
+router.post('/logout',authenticate,user_controller.logout);
+
 
 module.exports = router;
 

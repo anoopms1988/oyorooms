@@ -1,5 +1,5 @@
 {
-  "name": "bodybuilding",
+  "name": "oyorooms",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -31,13 +31,13 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anoopms1988/bodybuilding.git"
+    "url": "git+https://github.com/anoopms1988/oyorooms.git"
   },
   "author": "anoopms",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/anoopms1988/bodybuilding/issues"
+    "url": "https://github.com/anoopms1988/oyorooms/issues"
   },
-  "homepage": "https://github.com/anoopms1988/bodybuilding#readme",
-  "description": "bodybuilding"
+  "homepage": "https://github.com/anoopms1988/oyorooms#readme",
+  "description": "oyorooms"
 }

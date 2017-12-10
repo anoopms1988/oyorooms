@@ -1,5 +1,5 @@
-var User = require('../../models/user');
-var encrypt=require('../../services/encryption')
+var User = require('../../models/user/user');
+var encrypt = require('../../services/encryption')
 var async = require('async');
 
 
@@ -22,7 +22,7 @@ exports.create_user = function (req, res, next) {
     });
     var errors = req.validationErrors();
     if (errors) {
-            console.log(errors);
+        console.log(errors);
     } else {
         new_user.save(function (err) {
             if (err) {
@@ -35,4 +35,9 @@ exports.create_user = function (req, res, next) {
 
     }
 
+};
+
+exports.logout = function (req, res, next) {
+    req.logout();
+    res.redirect('/');
 };
