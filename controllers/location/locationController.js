@@ -1,10 +1,10 @@
-var LocationModels = require('../../models/location/location');
+var Country = require('../../models/location/country');
 var async = require('async');
 
 exports.create_country=function(req, res, next){
     req.checkBody('name', 'Country name must not be empty.').notEmpty();
 
-    var country=new LocationModels.Country({
+    var country=new Country({
         name:req.body.name,
         code:req.body.code
     }
