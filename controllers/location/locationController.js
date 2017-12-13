@@ -18,10 +18,22 @@ exports.create_country=function(req, res, next){
             if (err) {
                 handleError(res, err);
             } else {
-                res.send(country);
+                var result={'country':country}
+                res.send(result);
             }
-            console.log(country);
         });
     }
     
+}
+
+exports.get_countries=function(req, res, next){
+    Country.find({}, function(err, countries) {
+        var countryMap = {};
+    
+        countries.forEach(function(country) {
+            countryMap[country._id] = country;
+        });
+    
+        res.send(countryMap);  
+      });
 }

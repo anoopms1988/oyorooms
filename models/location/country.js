@@ -10,11 +10,6 @@ var CountrySchema =Schema(
 )
 
 
-
-
-
-
-
 module.exports = mongoose.model('Country', CountrySchema)
 
 
