@@ -1,4 +1,5 @@
 var Country = require('../../models/location/country');
+var State = require('../../models/location/state');
 var async = require('async');
 
 exports.create_country=function(req, res, next){
@@ -57,3 +58,44 @@ exports.delete_country=function(req, res, next){
             res.status(204).json({ message: 'Country Deleted!'});
     });
 }
+
+exports.create_state=function(req, res, next){
+    req.checkBody('name', 'State name must not be empty.').notEmpty();
+    req.checkBody('country', 'Country must not be empty.').notEmpty();
+
+    var state=new State({
+        name:req.body.name,
+        code:req.body.code,
+        country:req.body.country,
+    }
+    );
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors)
+    } else {
+        state.save(function (err) {
+            if (err) {
+                handleError(res, err);
+            } else {
+                var result={'data':state}
+                res.send(result);
+            }
+        });
+    } 
+}
+
+exports.get_states=function(req, res, next){
+    State.find({},function(err,states) {
+        var stateMap = {};
+    
+        states.forEach(function(state) {
+            stateMap[state._id] = state;
+        });
+        var result={'data':stateMap}
+        res.send(result);  
+      });
+}
+
+
+
