@@ -18,7 +18,7 @@ exports.create_country=function(req, res, next){
             if (err) {
                 handleError(res, err);
             } else {
-                var result={'country':country}
+                var result={'data':country}
                 res.send(result);
             }
         });
@@ -33,7 +33,27 @@ exports.get_countries=function(req, res, next){
         countries.forEach(function(country) {
             countryMap[country._id] = country;
         });
-    
-        res.send(countryMap);  
+        var result={'data':countryMap}
+        res.send(result);  
       });
+}
+
+exports.specific_country=function(req, res, next){
+    var countryId=req.params.countryId
+    Country.findOne({_id: countryId}, function (err, country) { 
+        if (err){
+            res.status(500).send(err)
+        }
+        var result={'data':country}
+        res.send(result);
+     });
+}
+
+exports.delete_country=function(req, res, next){
+    Country.findByIdAndRemove(req.params.countryId, function(err) {
+        if (err)
+            res.send(err);
+        else
+            res.status(204).json({ message: 'Country Deleted!'});
+    });
 }
