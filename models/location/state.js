@@ -3,8 +3,6 @@ var Schema=mongoose.Schema
 
 
 
-
-
 var StateSchema=Schema(
     {
         name:{type:String,required:true},
