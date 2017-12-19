@@ -5,13 +5,12 @@ var Country =require('../../models/location/country');
 
 
 
-var StateSchema=Schema(
+var StateSchema=new Schema(
     {
         name:{type:String,required:true},
         code :{type:String},
         status: { type: Boolean, default:true },
-        country: { type: Schema.ObjectId, ref: 'Country', required: true },
-        country:[Country.schema]
+        country: { type: Schema.ObjectId, ref: 'Country', required: true }
     }
 )
 

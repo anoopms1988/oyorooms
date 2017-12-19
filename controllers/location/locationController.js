@@ -86,7 +86,8 @@ exports.create_state=function(req, res, next){
 }
 
 exports.get_states=function(req, res, next){
-    State.find({}).exec({},function(err,states) {
+    State.find({}).populate({path:'country', select:'name code'}).
+    exec({},function(err,states) {
         var stateMap = {};
     
         states.forEach(function(state) {
