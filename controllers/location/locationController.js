@@ -1,6 +1,7 @@
 var Country = require('../../models/location/country');
 var State = require('../../models/location/state');
 var City = require('../../models/location/city');
+var Location = require('../../models/location/location');
 var async = require('async');
 
 exports.create_country=function(req, res, next){
@@ -178,4 +179,29 @@ exports.delete_city=function(req, res, next){
     });
 }
 
+exports.create_location=function(req, res, next){
+    req.checkBody('name', 'Location name must not be empty.').notEmpty();
+    req.checkBody('city', 'City must not be empty.').notEmpty();
+
+    var location=new Location({
+        name:req.body.name,
+        code:req.body.code,
+        city:req.body.city,
+    }
+    );
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors)
+    } else {
+        location.save(function (err) {
+            if (err) {
+                res.status(500).send(err)
+            } else {
+                var result={'data':location}
+                res.send(result);
+            }
+        });
+    } 
+}
 

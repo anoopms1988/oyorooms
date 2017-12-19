@@ -6,7 +6,7 @@ var LocationSchema=Schema(
         name:{type:String,required:true},
         code :{type:String},
         status: { type: Boolean, default:true },
-        City: { type: Schema.ObjectId, ref: 'City', required: true },
+        city: { type: Schema.ObjectId, ref: 'City', required: true },
     }
 )
 

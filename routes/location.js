@@ -20,5 +20,8 @@ router.post('/city',authenticate,location_controller.create_city);
 router.get('/city',authenticate,location_controller.get_cities);
 router.get('/city/:cityId',authenticate,location_controller.specific_city);
 router.delete('/city/:cityId',authenticate,location_controller.delete_city);
+//Location routes
+router.post('/location',authenticate,location_controller.create_location);
+
 
 module.exports = router;
