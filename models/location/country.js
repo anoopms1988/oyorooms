@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema=mongoose.Schema
 
-var CountrySchema =Schema(
+var CountrySchema =new Schema(
     {
         name:{type:String,required:true},
         code :{type:String},
