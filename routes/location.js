@@ -13,5 +13,12 @@ router.delete('/country/:countryId',authenticate,location_controller.delete_coun
 //State routes
 router.post('/state',authenticate,location_controller.create_state);
 router.get('/state',authenticate,location_controller.get_states);
+router.get('/state/:stateId',authenticate,location_controller.specific_state);
+router.delete('/state/:stateId',authenticate,location_controller.delete_state);
+//City routes
+router.post('/city',authenticate,location_controller.create_city);
+router.get('/city',authenticate,location_controller.get_cities);
+router.get('/city/:cityId',authenticate,location_controller.specific_city);
+router.delete('/city/:cityId',authenticate,location_controller.delete_city);
 
 module.exports = router;

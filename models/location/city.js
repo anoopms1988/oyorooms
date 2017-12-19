@@ -6,7 +6,7 @@ var CitySchema=Schema(
         name:{type:String,required:true},
         code :{type:String},
         status: { type: Boolean, default:true },
-        State: { type: Schema.ObjectId, ref: 'State', required: true },
+        state: { type: Schema.ObjectId, ref: 'State', required: true },
     }
 )
 
