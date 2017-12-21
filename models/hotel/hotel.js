@@ -6,7 +6,7 @@ var HotelSchema=new Schema(
         name:{type:String,required:true},
         address:{type:String},
         location: { type: Schema.ObjectId, ref: 'Location', required: true },
-        amenities:[{type: Schema.ObjectId, ref: 'Amenities'}]
+        amenities:[{type: Schema.ObjectId, ref: 'Amenity'}]
     }
 )
 
