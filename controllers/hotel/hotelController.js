@@ -55,3 +55,31 @@ exports.delete_amenity=function(req, res, next){
             res.status(204).json({ message: 'Amenity Deleted!'});
     });
 }
+
+exports.create_hotel=function(req, res, next){
+    req.checkBody('name', 'Hotel name must not be empty.').notEmpty();
+    req.checkBody('address', 'Address must not be empty.').notEmpty();
+    req.checkBody('location', 'Location must not be empty.').notEmpty();
+
+    var hotel=new Hotel({
+        name:req.body.name,
+        codaddresse:req.body.address,
+        location:req.body.location,
+        amenities:[req.body.amenities]
+    }
+    );
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors)
+    } else {
+        hotel.save(function (err) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                var result={'data':hotel}
+                res.send(result);
+            }
+        });
+    } 
+}

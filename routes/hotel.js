@@ -11,4 +11,7 @@ router.get('/amenity',authenticate,hotel_controller.get_amenities);
 router.get('/amenity/:amenityId',authenticate,hotel_controller.specific_amenity);
 router.delete('/amenity/:amenityId',authenticate,hotel_controller.delete_amenity);
 
+//Hotel routes
+router.post('/hotel',authenticate,hotel_controller.create_hotel);
+
 module.exports = router;
