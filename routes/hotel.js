@@ -7,5 +7,8 @@ var hotel_controller =require('../controllers/hotel/hotelController');
 
 //Amenity routes
 router.post('/amenity',authenticate,hotel_controller.create_amenity);
+router.get('/amenity',authenticate,hotel_controller.get_amenities);
+router.get('/amenity/:amenityId',authenticate,hotel_controller.specific_amenity);
+router.delete('/amenity/:amenityId',authenticate,hotel_controller.delete_amenity);
 
 module.exports = router;
