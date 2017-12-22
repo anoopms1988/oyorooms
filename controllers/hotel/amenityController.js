@@ -1,0 +1,1 @@
+var Amenity=require('../../models/hotel/amenity');
