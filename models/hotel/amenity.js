@@ -8,4 +8,4 @@ var AmenitiesSchema=new Schema(
     }
 )
 
-module.exports = mongoose.model('Amenities', AmenitiesSchema)
+module.exports = mongoose.model('Amenity', AmenitiesSchema)
