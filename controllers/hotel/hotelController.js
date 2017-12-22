@@ -83,3 +83,43 @@ exports.create_hotel=function(req, res, next){
         });
     } 
 }
+
+exports.get_hotels=function(req, res, next){
+    Hotel.find({}).populate({path:'location',select:'name code'}).
+    populate({path:'amenities',select:'name'}).
+    exec({}, function(err, hotels) {
+        var hotelMap = {};
+    
+        hotels.forEach(function(hotel) {
+            hotelMap[hotel._id] = hotel;
+        });
+        var result={'data':hotelMap}
+        res.send(result);  
+      });
+}
+
+exports.specific_hotel=function(req, res, next){
+    var hotelId=req.params.hotelId
+    Hotel.findOne({_id: hotelId}).populate({path:'location',select:'name code'}).
+    populate({path:'amenities',select:'name'}).exec({}, function (err,hotel) { 
+        if (err){
+            res.status(500).send(err)
+        }
+        var result={'data':hotel}
+        res.send(result);
+     });
+}
+
+exports.update_hotel=function(req, res, next){
+    var hotelId=req.params.hotelId
+    Hotel.findOne({_id: hotelId}).populate({path:'location',select:'name code'}).
+    populate({path:'amenities',select:'name'}).exec({}, function (err,hotel) { 
+        if (err){
+            res.status(500).send(err)
+        }
+        var result={'data':hotel}
+        res.send(result);
+     });
+}
+
+
