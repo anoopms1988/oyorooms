@@ -123,4 +123,12 @@ exports.update_hotel = function (req, res, next) {
         });
 }
 
+exports.delete_hotel = function (req, res, next) {
+    Hotel.findByIdAndRemove(req.params.hotelId, function (err) {
+        if (err)
+            res.send(err);
+        else
+            res.status(204).json({ message: 'Hotel Deleted!' });
+    });
+}
 
