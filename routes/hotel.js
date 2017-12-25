@@ -17,6 +17,9 @@ router.get('/hotel',authenticate,hotel_controller.get_hotels);
 router.get('/hotel/:hotelId',authenticate,hotel_controller.specific_hotel);
 router.put('/hotel/:hotelId',authenticate,hotel_controller.update_hotel);
 router.delete('/hotel/:hotelId',authenticate,hotel_controller.delete_hotel);
+//Hotel rules
+router.post('/rule',authenticate,hotel_controller.create_rule);
+router.get('/rule/:ruleId',authenticate,hotel_controller.specific_rule);
 
 module.exports = router;
 

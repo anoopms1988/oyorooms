@@ -1,5 +1,6 @@
 var Hotel = require('../../models/hotel/hotel');
 var Amenity = require('../../models/hotel/amenity');
+var Rule = require('../../models/hotel/rule');
 var async = require('async');
 
 exports.create_amenity = function (req, res, next) {
@@ -113,7 +114,7 @@ exports.specific_hotel = function (req, res, next) {
 exports.update_hotel = function (req, res, next) {
     var hotelId = req.params.hotelId
     var query = { _id: hotelId }
-    Hotel.findOneAndUpdate(query, req.body,{new: true}).populate({ path: 'location', select: 'name code' }).
+    Hotel.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'location', select: 'name code' }).
         populate({ path: 'amenities', select: 'name' }).exec({}, function (err, hotel) {
             if (err) {
                 res.status(500).send(err)
@@ -130,5 +131,58 @@ exports.delete_hotel = function (req, res, next) {
         else
             res.status(204).json({ message: 'Hotel Deleted!' });
     });
+}
+
+exports.create_rule = function (req, res, next) {
+    req.checkBody('check_in', 'Check in must not be empty.').notEmpty();
+    req.checkBody('check_out', 'Check out must not be empty.').notEmpty();
+    req.checkBody('hotel', 'Hotel out must not be empty.').notEmpty();
+
+    var rule = new Rule({
+        check_in: req.body.check_in,
+        check_out: req.body.check_out,
+        nationality: req.body.nationality,
+        hotel: req.body.hotel
+    }
+    );
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors)
+    } else {
+        rule.save(function (err) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                var result = { 'data': rule }
+                res.send(result);
+            }
+        });
+    }
+}
+
+exports.specific_rule = function (req, res, next) {
+    var ruleId = req.params.ruleId
+    Rule.findOne({ _id: ruleId }).populate({ path: 'hotel', select: 'name' }).exec({}, function (err, rule) {
+            if (err) {
+                res.send(err)
+            }
+            var result = { 'data': rule }
+            res.send(result);
+        });
+}
+
+exports.get_hotels = function (req, res, next) {
+    Hotel.find({}).populate({ path: 'location', select: 'name code' }).
+        populate({ path: 'amenities', select: 'name' }).
+        exec({}, function (err, hotels) {
+            var hotelMap = {};
+
+            hotels.forEach(function (hotel) {
+                hotelMap[hotel._id] = hotel;
+            });
+            var result = { 'data': hotelMap }
+            res.send(result);
+        });
 }
 

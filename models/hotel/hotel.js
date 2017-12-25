@@ -10,4 +10,4 @@ var HotelSchema=new Schema(
     }
 )
 
-module.exports = mongoose.model('hotel', HotelSchema)
+module.exports = mongoose.model('Hotel',HotelSchema)
