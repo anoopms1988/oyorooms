@@ -1,6 +1,7 @@
 var Hotel = require('../../models/hotel/hotel');
 var Amenity = require('../../models/hotel/amenity');
 var Rule = require('../../models/hotel/rule');
+var Cancellation=require('../../models/hotel/cancellation');
 var async = require('async');
 
 exports.create_amenity = function (req, res, next) {
