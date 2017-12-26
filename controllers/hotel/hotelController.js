@@ -1,7 +1,7 @@
 var Hotel = require('../../models/hotel/hotel');
 var Amenity = require('../../models/hotel/amenity');
 var Rule = require('../../models/hotel/rule');
-var Cancellation=require('../../models/hotel/cancellation');
+var Cancellation = require('../../models/hotel/cancellation');
 var async = require('async');
 
 exports.create_amenity = function (req, res, next) {
@@ -165,12 +165,12 @@ exports.create_rule = function (req, res, next) {
 exports.specific_rule = function (req, res, next) {
     var ruleId = req.params.ruleId
     Rule.findOne({ _id: ruleId }).populate({ path: 'hotel', select: 'name' }).exec({}, function (err, rule) {
-            if (err) {
-                res.send(err)
-            }
-            var result = { 'data': rule }
-            res.send(result);
-        });
+        if (err) {
+            res.send(err)
+        }
+        var result = { 'data': rule }
+        res.send(result);
+    });
 }
 
 exports.get_rules = function (req, res, next) {
@@ -188,7 +188,7 @@ exports.get_rules = function (req, res, next) {
 exports.update_rule = function (req, res, next) {
     var ruleId = req.params.ruleId
     var query = { _id: ruleId }
-    Rule.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select:'name' }).
+    Rule.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select: 'name' }).
         exec({}, function (err, rule) {
             if (err) {
                 res.status(500).send(err)
@@ -198,12 +198,83 @@ exports.update_rule = function (req, res, next) {
         });
 }
 
-exports.delete_rule= function (req, res, next) {
+exports.delete_rule = function (req, res, next) {
     Rule.findByIdAndRemove(req.params.ruleId, function (err) {
         if (err)
             res.send(err);
         else
             res.status(204).json({ message: 'Hotel Deleted!' });
+    });
+}
+
+exports.create_cancellation = function (req, res, next) {
+    req.checkBody('cancellation', 'Cancellation must not be empty.').notEmpty();
+    req.checkBody('local_policy', 'Local policy must not be empty.').notEmpty();
+    req.checkBody('hotel', 'Hotel must not be empty.').notEmpty();
+
+    var cancellation = new Cancellation({
+        cancellation: req.body.cancellation,
+        local_policy: req.body.local_policy,
+        hotel: req.body.hotel,
+    });
+
+    var errors = req.validationErrors();
+    if (errors) {
+        console.log(errors);
+    } else {
+        cancellation.save(function (err) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                var result = { 'data': cancellation }
+                res.send(result);
+            }
+        });
+    }
+}
+
+exports.specific_cancellation = function (req, res, next) {
+    var cancellationId = req.params.cancellationId
+    Cancellation.findOne({ _id: cancellationId }).populate({ path: 'hotel', select: 'name' }).exec({}, function (err, cancellation) {
+        if (err) {
+            res.send(err)
+        }
+        var result = { 'data': cancellation }
+        res.send(result);
+    });
+}
+
+exports.get_cancellations= function (req, res, next) {
+    Cancellation.find({}).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, cancellations) {
+            var cancellationMap = {};
+            cancellations.forEach(function (cancellation) {
+                cancellationMap[cancellation._id] = cancellation;
+            });
+            var result = { 'data': cancellationMap }
+            res.send(result);
+        });
+}
+
+exports.update_cancellation= function (req, res, next) {
+    var cancellationId = req.params.cancellationId
+    var query = { _id: cancellationId }
+    Cancellation.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, cancellation) {
+            if (err) {
+                res.status(500).send(err)
+            }
+            var result = { 'data': cancellation }
+            res.send(result);
+        });
+}
+
+exports.delete_cancellation= function (req, res, next) {
+    Cancellation.findByIdAndRemove(req.params.cancellationId, function (err) {
+        if (err)
+            res.send(err);
+        else
+            res.status(204).json({ message: 'Cancellation Deleted!' });
     });
 }
 
