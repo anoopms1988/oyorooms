@@ -20,6 +20,9 @@ router.delete('/hotel/:hotelId',authenticate,hotel_controller.delete_hotel);
 //Hotel rules
 router.post('/rule',authenticate,hotel_controller.create_rule);
 router.get('/rule/:ruleId',authenticate,hotel_controller.specific_rule);
+router.get('/rule',authenticate,hotel_controller.get_rules);
+router.put('/rule/:ruleId',authenticate,hotel_controller.update_rule);
+router.delete('/rule/:ruleId',authenticate,hotel_controller.delete_rule);
 
 module.exports = router;
 

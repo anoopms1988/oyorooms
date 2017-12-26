@@ -172,17 +172,37 @@ exports.specific_rule = function (req, res, next) {
         });
 }
 
-exports.get_hotels = function (req, res, next) {
-    Hotel.find({}).populate({ path: 'location', select: 'name code' }).
-        populate({ path: 'amenities', select: 'name' }).
-        exec({}, function (err, hotels) {
-            var hotelMap = {};
-
-            hotels.forEach(function (hotel) {
-                hotelMap[hotel._id] = hotel;
+exports.get_rules = function (req, res, next) {
+    Rule.find({}).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, rules) {
+            var ruleMap = {};
+            rules.forEach(function (rule) {
+                ruleMap[rule._id] = rule;
             });
-            var result = { 'data': hotelMap }
+            var result = { 'data': ruleMap }
             res.send(result);
         });
+}
+
+exports.update_rule = function (req, res, next) {
+    var ruleId = req.params.ruleId
+    var query = { _id: ruleId }
+    Rule.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select:'name' }).
+        exec({}, function (err, rule) {
+            if (err) {
+                res.status(500).send(err)
+            }
+            var result = { 'data': rule }
+            res.send(result);
+        });
+}
+
+exports.delete_rule= function (req, res, next) {
+    Rule.findByIdAndRemove(req.params.ruleId, function (err) {
+        if (err)
+            res.send(err);
+        else
+            res.status(204).json({ message: 'Hotel Deleted!' });
+    });
 }
 
