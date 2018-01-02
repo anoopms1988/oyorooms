@@ -2,6 +2,7 @@ var Hotel = require('../../models/hotel/hotel');
 var Amenity = require('../../models/hotel/amenity');
 var Rule = require('../../models/hotel/rule');
 var Cancellation = require('../../models/hotel/cancellation');
+var Captian = require('../../models/hotel/captian');
 var async = require('async');
 
 exports.create_amenity = function (req, res, next) {
@@ -278,3 +279,32 @@ exports.delete_cancellation= function (req, res, next) {
     });
 }
 
+exports.create_captian = function (req, res, next) {
+    req.checkBody('name', 'Captian name must not be empty.').notEmpty();
+    req.checkBody('phone_number', 'Phone number must not be empty.').notEmpty();
+    req.checkBody('email', 'Email must not be empty.').notEmpty();
+    req.checkBody('email', 'Email is not valid').isEmail();
+
+    var captian = new Captian({
+        name: req.body.name,
+        phone_number: req.body.phone_number,
+        email: req.body.email,
+        cities: [req.body.cities],
+        hotels: [req.body.hotels],
+    }
+    );
+
+    var errors = req.validationErrors();
+    if (errors) {
+        res.status(500).send(errors)
+    } else {
+        captian.save(function (err) {
+            if (err) {
+                res.status(500).send(err);
+            } else {
+                var result = { 'data': captian }
+                res.send(result);
+            }
+        });
+    }
+}

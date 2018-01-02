@@ -29,6 +29,8 @@ router.get('/cancellation/:cancellationId',authenticate,hotel_controller.specifi
 router.get('/cancellation',authenticate,hotel_controller.get_cancellations);
 router.put('/cancellation/:cancellationId',authenticate,hotel_controller.update_cancellation);
 router.delete('/cancellation/:cancellationId',authenticate,hotel_controller.delete_cancellation);
+//Captian 
+router.post('/captian',authenticate,hotel_controller.create_captian);
 
 module.exports = router;
 
