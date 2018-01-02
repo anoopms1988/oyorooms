@@ -289,6 +289,7 @@ exports.create_captian = function (req, res, next) {
         name: req.body.name,
         phone_number: req.body.phone_number,
         email: req.body.email,
+        address:req.body.address,
         cities: [req.body.cities],
         hotels: [req.body.hotels],
     }
@@ -300,7 +301,7 @@ exports.create_captian = function (req, res, next) {
     } else {
         captian.save(function (err) {
             if (err) {
-                res.status(500).send(err);
+                res.send(err);
             } else {
                 var result = { 'data': captian }
                 res.send(result);
