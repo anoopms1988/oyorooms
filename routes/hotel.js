@@ -20,6 +20,17 @@ router.delete('/hotel/:hotelId',authenticate,hotel_controller.delete_hotel);
 //Hotel rules
 router.post('/rule',authenticate,hotel_controller.create_rule);
 router.get('/rule/:ruleId',authenticate,hotel_controller.specific_rule);
+router.get('/rule',authenticate,hotel_controller.get_rules);
+router.put('/rule/:ruleId',authenticate,hotel_controller.update_rule);
+router.delete('/rule/:ruleId',authenticate,hotel_controller.delete_rule);
+//Hotel cancellation policy
+router.post('/cancellation',authenticate,hotel_controller.create_cancellation);
+router.get('/cancellation/:cancellationId',authenticate,hotel_controller.specific_cancellation);
+router.get('/cancellation',authenticate,hotel_controller.get_cancellations);
+router.put('/cancellation/:cancellationId',authenticate,hotel_controller.update_cancellation);
+router.delete('/cancellation/:cancellationId',authenticate,hotel_controller.delete_cancellation);
+//Captian 
+router.post('/captian',authenticate,hotel_controller.create_captian);
 
 module.exports = router;
 
