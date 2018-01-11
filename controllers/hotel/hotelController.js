@@ -309,3 +309,39 @@ exports.create_captian = function (req, res, next) {
         });
     }
 }
+
+exports.specific_captian = function (req, res, next) {
+    var captianId = req.params.captianId
+    Captian.findOne({ _id: captianId }).populate({ path: 'cities', select: 'name' }).exec({}, function (err, captian) {
+        if (err) {
+            res.send(err)
+        }
+        var result = { 'data': captian }
+        res.send(result);
+    });
+}
+
+exports.get_captians= function (req, res, next) {
+    Captian.find({}).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, captains) {
+            var captianMap = {};
+            captains.forEach(function (captain) {
+                captianMap[captain._id] = captain;
+            });
+            var result = { 'data': captianMap }
+            res.send(result);
+        });
+}
+
+exports.update_captian= function (req, res, next) {
+    var cancellationId = req.params.cancellationId
+    var query = { _id: cancellationId }
+    Cancellation.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, cancellation) {
+            if (err) {
+                res.status(500).send(err)
+            }
+            var result = { 'data': cancellation }
+            res.send(result);
+        });
+}
