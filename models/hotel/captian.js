@@ -8,7 +8,7 @@ var CaptianSchema =new Schema(
         email:{type:String,required:true},
         address:{type:String,required:true},
         cities: [{ type: Schema.ObjectId, ref: 'City'}],
-        hotels:[{type: Schema.ObjectId, ref: 'Hotel'}]
+        hotels:[{type: Schema.Types.ObjectId, ref: 'Hotel'}]
     }
 )
 
