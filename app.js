@@ -12,6 +12,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var location= require('./routes/location');
 var hotel   =require('./routes/hotel');
+var package =require('./routes/package');
 
 //Config routes
 var passport= require('./config/passport');
@@ -77,6 +78,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/location', location);
 app.use('/hotel', hotel);
+app.use('/package', package);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
