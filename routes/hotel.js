@@ -33,6 +33,8 @@ router.delete('/cancellation/:cancellationId',authenticate,hotel_controller.dele
 router.post('/captian',authenticate,hotel_controller.create_captian);
 router.get('/captian/:captianId',authenticate,hotel_controller.specific_captian);
 router.get('/captian',authenticate,hotel_controller.get_captians);
+router.put('/captian/:captianId',authenticate,hotel_controller.update_captian);
+router.delete('/captian/:captianId',authenticate,hotel_controller.delete_captian);
 
 module.exports = router;
 

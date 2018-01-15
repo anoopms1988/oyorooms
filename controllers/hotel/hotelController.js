@@ -334,14 +334,23 @@ exports.get_captians= function (req, res, next) {
 }
 
 exports.update_captian= function (req, res, next) {
-    var cancellationId = req.params.cancellationId
-    var query = { _id: cancellationId }
-    Cancellation.findOneAndUpdate(query, req.body, { new: true }).populate({ path: 'hotel', select: 'name' }).
-        exec({}, function (err, cancellation) {
+    var captianId = req.params.captianId
+    var query = { _id: captianId }
+    Captian.findOneAndUpdate(query, req.body,{ new: true }).populate({ path: 'hotel', select: 'name' }).
+        exec({}, function (err, captian) {
             if (err) {
                 res.status(500).send(err)
             }
-            var result = { 'data': cancellation }
+            var result = { 'data': captian }
             res.send(result);
         });
+}
+
+exports.delete_captian= function (req, res, next) {
+    Captian.findByIdAndRemove(req.params.captianId, function (err) {
+        if (err)
+            res.send(err);
+        else
+            res.status(204).json({ message: 'Captian Deleted!' });
+    });
 }
